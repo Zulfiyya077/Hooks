@@ -1,88 +1,37 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css'
-
+import React from 'react';
+import UserList from './components/UserList/UserList';
+import './App.css';
+import TextRotation from './components/textRotation/TextRotation';
+import Darkmode from './components/Darkmode/Darkmode';
+import CurrentTime from './components/CurrentTime/CurrentTime';
+import WindowResize from './components/WindowResize/WindowResize';
+import CharCount from './components/CharCount/CharCount';
+import Bgcolor from './components/Bg-color/Bg-color';
 
 
 
 function App() {
 
-  const [todo, setTodo] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [input, setInput] = useState("");
-
-  useEffect(() => {
-
-    const fetchtodos = async () => {
-      try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/todos/?_limit=10')
-        setTodo(response.data);
-        setLoading(false);
-        console.log(response.data);
-      }
-      catch (error) {
-        console.error("Error fetching todos:", error);
-        setLoading(false);
-      }
-      finally {
-        setLoading(false);
-      }
-    }
-
-    fetchtodos();
-  }, []);
-
-
-  const deleteTodo = (id) => {
-    setTodo(todo.filter(item => item.id !== id));
-  }
-
-  const addTodo = () => {
-    if (input.trim() !== "") {
-      const newTodo = {
-        userId: 1,
-        id: todo.length + 1,
-        title: input,
-        completed: false
-      };
-      setTodo([newTodo, ...todo]);
-      setInput("");
-    }
-  }
-
-
-
-
 
   return (
-    <div className="App">
-      <h1>Todo List</h1>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Add a new todo"
-      />
+    <>
+    {/* <UserList />
+     */}
 
-      <button onClick={addTodo}>Add Todo</button>
+     {/* <TextRotation /> */}
 
-      {loading ? (
-        <p>Loading...</p>)
-        : (
-          <ul>
-            {todo.map((item) => (
-              <li key={item.id}>
-                {item.title}
-                <button onClick={() => deleteTodo(item.id)}>Delete</button>
-              </li>
-            ))}
-          </ul>
-        )}
+     {/* <Darkmode /> */}
 
+     {/* <CurrentTime /> */}
 
-    </div>
+     {/* <WindowResize /> */}
+
+     {/* <CharCount /> */}
+
+     <Bgcolor />
+    </>
+
   )
-
 }
   export default App;
 
