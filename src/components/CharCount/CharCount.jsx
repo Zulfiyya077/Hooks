@@ -18,15 +18,16 @@ const CharCount = () => {
     }
 
     return (
-        <div>
+        <div className={styles.container}>
            
             <input type="text"
                 value={inputText}
                 onChange={handleChange}
+                className={styles.input}
             />
 
-            <h2>Character Count</h2>
-            <h3> {characterCount}</h3>
+            <h2 className={styles.title}>Character Count</h2>
+            <h3 className={styles.count}> {characterCount}</h3>
 
         </div>
     )

@@ -36,8 +36,8 @@ const Darkmode = () => {
         return (
 
             <div className={styles.container}>
-                <h1>Hello World</h1>
-                <button onClick={toggle}>Toggle Dark Mode</button>
+                <h1 className={styles.title}>Hello World</h1>
+                <button onClick={toggle} className={styles.toggleButton}>Toggle Dark Mode</button>
             </div>
 
         )

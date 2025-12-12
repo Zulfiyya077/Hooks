@@ -27,10 +27,10 @@ const WindowResize = () => {
     })
 
     return (
-        <>
-            <h2>Width: {windowSize.width}px</h2>
-            <h2>Height: {windowSize.height}px</h2>
-        </>
+        <div className={styles.container}>
+            <h2 className={styles.sizeInfo}>Width: {windowSize.width}px</h2>
+            <h2 className={styles.sizeInfo}>Height: {windowSize.height}px</h2>
+        </div>
     )
 }
 

@@ -16,7 +16,7 @@ const CurrentTime = () => {
     }, [])
 
     return (
-        <div>
+        <div className={styles.container}>
             <h1 className={styles.time}>{currentTime.toLocaleTimeString()}</h1>
         </div>
 

@@ -7,6 +7,12 @@ import CurrentTime from './components/CurrentTime/CurrentTime';
 import WindowResize from './components/WindowResize/WindowResize';
 import CharCount from './components/CharCount/CharCount';
 import Bgcolor from './components/Bg-color/Bg-color';
+import MouseTracker from './components/MousTracker/MouseTracker';
+import Stopwatch from './components/Stopwatch/Stopwatch';
+import CountDown from './components/CountDown/CountDown';
+import AnimateText from './components/AnimateText/AnimateText';
+import FocusInput from './components/FocusInput/FocusInput';
+import Tab from './components/Tab/Tab';
 
 
 
@@ -15,20 +21,31 @@ function App() {
 
   return (
     <>
-    {/* <UserList />
-     */}
+    <UserList />
 
-     {/* <TextRotation /> */}
+     <TextRotation />
 
-     {/* <Darkmode /> */}
+     <Darkmode />
 
-     {/* <CurrentTime /> */}
+     <CurrentTime />
 
-     {/* <WindowResize /> */}
+     <WindowResize />
 
-     {/* <CharCount /> */}
+     <CharCount />
 
      <Bgcolor />
+
+     <MouseTracker />
+
+     <Stopwatch />
+
+     <CountDown />
+
+     <AnimateText />
+
+     <FocusInput />
+
+   <Tab />
     </>
 
   )
