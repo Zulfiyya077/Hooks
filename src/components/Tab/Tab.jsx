@@ -6,18 +6,18 @@ import axios from "axios";
 const Tab = () => {
     const tabs = ["Home", "Profile", "Settings"];
 
-    const [activeTab, setActiveTab] = useState('Home');
-    const [bgColor, setBgColor] = useState('#f0f4f8');
-
-    const [btnColor, setBtnColor] = useState({
-        Home: '#ff6b6b',
-        Profile: '#4ecdc4',
-        Settings: '#45b7d1'
+    const [state, setState] = useState({
+        activeTab: 'Home',
+        bgColor: '#f0f4f8',
+        btnColor: {
+            Home: '#ff6b6b',
+            Profile: '#4ecdc4',
+            Settings: '#45b7d1'
+        },
+        apiData: null,
+        photoUrl: '',
+        loading: false
     });
-
-    const [apiData, setApiData] = useState(null);
-    const [photoUrl, setPhotoUrl] = useState('');
-    const [loading, setLoading] = useState(false);
 
     const randomColor = () => {
         const colors = [
@@ -27,55 +27,65 @@ const Tab = () => {
         return colors[Math.floor(Math.random() * colors.length)];
     };
 
+    const updateState = (key, value) => {
+        setState(prev => ({
+            ...prev,
+            [key]: value
+        }));
+    };
+
     const handleTabClick = (tabName) => {
-        setActiveTab(tabName);
-        setBgColor(randomColor());
-        setBtnColor({
-            Home: randomColor(),
-            Profile: randomColor(),
-            Settings: randomColor()
-        });
+        setState(prev => ({
+            ...prev,
+            activeTab: tabName,
+            bgColor: randomColor(),
+            btnColor: {
+                Home: randomColor(),
+                Profile: randomColor(),
+                Settings: randomColor()
+            }
+        }));
     };
 
    
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
+            updateState('loading', true);
             try {
                 const response = await axios.get(
-                    `https://jsonplaceholder.typicode.com/posts/${activeTab.length}`
+                    `https://jsonplaceholder.typicode.com/posts/${state.activeTab.length}`
                 );
-                setApiData(response.data);
+                updateState('apiData', response.data);
             } catch (error) {
                 console.error("Error fetching tab data:", error);
             } finally {
-                setLoading(false);
+                updateState('loading', false);
             }
         };
         fetchData();
-    }, [activeTab]);
+    }, [state.activeTab]);
 
     
     useEffect(() => {
         const fetchPhoto = () => {
-            const randomSeed = `${activeTab}-${Date.now()}`;
-            setPhotoUrl(`https://api.dicebear.com/7.x/avataaars/svg?seed=${randomSeed}`);
+            const randomSeed = `${state.activeTab}-${Date.now()}`;
+            updateState('photoUrl', `https://api.dicebear.com/7.x/avataaars/svg?seed=${randomSeed}`);
         };
         fetchPhoto();
-    }, [activeTab]);
+    }, [state.activeTab]);
 
     return (
 
-        <div className={styles.container} style={{ backgroundColor: bgColor }}>
+        <div className={styles.container} style={{ backgroundColor: state.bgColor }}>
             <div className={styles.wrapper}>
                 <div className={styles.tabContainer}>
                     {tabs.map((tab) => (
                         <button
                             key={tab}
-                            className={`${styles.tabButton} ${activeTab === tab ? styles.active : ''}`}
+                            className={`${styles.tabButton} ${state.activeTab === tab ? styles.active : ''}`}
                             style={{ 
-                                backgroundColor: activeTab === tab ? btnColor[tab] : 'transparent',
-                                borderColor: btnColor[tab]
+                                backgroundColor: state.activeTab === tab ? state.btnColor[tab] : 'transparent',
+                                borderColor: state.btnColor[tab]
                             }}
                             onClick={() => handleTabClick(tab)}
                         >
@@ -86,14 +96,14 @@ const Tab = () => {
 
                 <div className={styles.content}>
                     <div className={styles.contentContainer}>
-                        <h2 className={styles.pageTitle}>{activeTab} Page</h2>
+                        <h2 className={styles.pageTitle}>{state.activeTab} Page</h2>
 
-                        {loading ? (
+                        {state.loading ? (
                             <div className={styles.loader}>Loading...</div>
-                        ) : apiData ? (
+                        ) : state.apiData ? (
                             <div className={styles.apiContent}>
-                                <h3 className={styles.contentTitle}>{apiData.title}</h3>
-                                <p className={styles.contentBody}>{apiData.body}</p>
+                                <h3 className={styles.contentTitle}>{state.apiData.title}</h3>
+                                <p className={styles.contentBody}>{state.apiData.body}</p>
                             </div>
                         ) : (
                             <p>Loading content...</p>
@@ -101,10 +111,10 @@ const Tab = () => {
                     </div>
 
                     <div className={styles.imageContainer}>
-                        {photoUrl ? (
+                        {state.photoUrl ? (
                             <img 
-                                src={photoUrl} 
-                                alt={`${activeTab} Avatar`} 
+                                src={state.photoUrl} 
+                                alt={`${state.activeTab} Avatar`} 
                                 className={styles.image} 
                             />
                         ) : (
